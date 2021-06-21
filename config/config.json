@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "danielcalvillo",
+    "password": "eco410",
+    "database": "danielcalvillo",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "danielcalvillo",
+    "password": "eco410",
+    "database": "danielcalvillo",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "danielcalvillo",
+    "password": "eco410",
+    "database": "danielcalvillo",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
