@@ -1,5 +1,45 @@
 const db = require('../models/index');
 const Users = db.users
+const jwt = require('jsonwebtoken')
+
+
+const generaToken = async (data)=>{
+  try {
+      let resultado = jwt.sign({
+          data}, process.env.SECRET_KEY
+      )
+      return resultado
+  }catch (err){
+      console.log(err)
+      throw new Error (err)
+  }
+}
+const userExistOnDatabase = async (usr) => {
+  let resultado = await Users.findOne({where: { name: usr.name, password: usr.password}, attributes : ['id', 'name', 'password'],})
+  if (resultado === null){
+      return false
+  }else {
+      return true
+  }
+}
+
+const loginUser = async (req, res) => {
+  let user = req.body
+  try {
+      let userExist = await userExistOnDatabase(user);
+      if (userExist) {
+          let tokenGenerated = await generaToken(user)
+          res.status(200).json({ message: "token generado correctamente", token: tokenGenerated})
+      } else {
+          throw new Error (err)
+      }
+  } catch (err) {
+      console.log(err)
+      res.status(400).json({ message: "Error en el login", error: err})
+  }
+}
+
+
 
 const createUser = async (req, res) => {
   let newUser = req.body
@@ -63,5 +103,6 @@ module.exports = {
   createUser,
   updateUser,
   getUser,
-  deleteUser
+  deleteUser,
+  loginUser
 }
